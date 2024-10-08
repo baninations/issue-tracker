@@ -1,18 +1,19 @@
+"use client";
+
+import { navLinks } from "@/consts";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { FaBug } from "react-icons/fa";
+import classnames from "classnames";
+
+// {`${
+//     link.href === pathname ? "text-zinc-800" : "text-zinc-400"
+//   }  hover:text-zinc-700`}
 
 const NavBar = () => {
-  const navLinks = [
-    {
-      href: "/",
-      label: "Dashboard",
-    },
-    {
-      href: "/issues",
-      label: "Issues",
-    },
-  ];
+  const pathname = usePathname();
+  console.log(pathname);
   return (
     <nav className="flex space-x-4 pl-4 border-b h-14 items-center mb-4">
       <Link href="/">
@@ -20,7 +21,14 @@ const NavBar = () => {
       </Link>
       <ul className="flex space-x-4">
         {navLinks.map((link) => (
-          <li className="text-zinc-400 hover:text-zinc-700" key={link.href}>
+          <li
+            className={classnames({
+              "text-zinc-800": link.href === pathname,
+              "text-zinc-400": link.href !== pathname,
+              "hover:text-zinc-700": true,
+            })}
+            key={link.href}
+          >
             <Link href={link.href}>{link.label}</Link>
           </li>
         ))}
